@@ -29,4 +29,8 @@ public class ConnectionFactory {
             con.close();
         } catch (SQLException sqle) {}
     }
+    
+    public static String getDBHOST() {
+        return DBHOST;
+    }
 }

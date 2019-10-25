@@ -6,8 +6,10 @@
 package com.mycompany.hacerdedo.punto0;
 
 import Clases.*;
-import Model.Usuario;
+import DAO.DAOFriend;
+import Model.User;
 import DAO.DAOUser;
+import Model.Friend;
 
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.geojson.Point;
@@ -16,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,14 +39,26 @@ public class ProyectoBD {
         }
     }
     
-    private static boolean checkCompatibilidad(Ruta chofer, Ruta pasajero) {
+    private static double distanciaPuntoRecta(double mChofer, double bChofer, Punto origenPasajero) {        
+        double xPasajero = origenPasajero.getLongitud();
+        double yPasajero = origenPasajero.getLatitud();
+        
+        double numerador = (-mChofer * xPasajero) + yPasajero - bChofer;
+        numerador = Math.abs(numerador);
+        double denominador = mChofer*mChofer + 1;
+        denominador = Math.sqrt(denominador);
+        
+        return numerador/denominador;    
+    }
+    
+    private static ArrayList<Punto> checkCompatibilidad(Ruta chofer, Ruta pasajero) {
+        ArrayList<Punto> rutaFinal = new ArrayList<Punto>();
+        
         double x1Chofer = chofer.getOrigen().getLongitud();
         double x2Chofer = chofer.getDestino().getLongitud();
         double y1Chofer = chofer.getOrigen().getLatitud();
         double y2Chofer = chofer.getDestino().getLatitud();
         
-        double x1Pasajero = pasajero.getOrigen().getLongitud();
-        double y1Pasajero = pasajero.getOrigen().getLatitud();
         double x2Pasajero = pasajero.getDestino().getLongitud();
         double y2Pasajero = pasajero.getDestino().getLatitud();
         
@@ -54,37 +69,31 @@ public class ProyectoBD {
             double bChofer;
             
             try {
+            
             mChofer = (y2Chofer - y1Chofer) / (x2Chofer - x1Chofer);
-
-            //double mPasajero = (y2Pasajero - y1Pasajero) / (x2Chofer - x1Pasajero);
-            
             bChofer = y1Chofer - mChofer * x1Chofer;
-            
-            //double bPasajero = y1Pasajero - mPasajero * x1Pasajero;
-            
-            //double x0 = -(bChofer - bPasajero)/(mChofer - mPasajero);
                 
             } catch(ArithmeticException e) {
                 System.out.println("Error en cálculo de compatibilidad: " + e);
-                return false;
+                return rutaFinal;
             }
             
-            if (y1Pasajero == mChofer * x1Pasajero + bChofer) {
-                System.out.println("Compatibles 100%: Pasajero está en la ruta del chofer");
-                return true;
-            } else if (true) {
-                //Implementar en la condición proyección de punto a un segmento
-                System.out.println("Compatibles 100%: Pasajero está cerca de la ruta del chofer");
-                return true;
+            if (distanciaPuntoRecta(mChofer, bChofer, pasajero.getOrigen()) <= 5) {
+                System.out.println("Compatibles 100%: Pasajero está en la ruta o cerca de la ruta del chofer");
+                rutaFinal.add(chofer.getOrigen());
+                rutaFinal.add(pasajero.getOrigen());
+                rutaFinal.add(chofer.getDestino());
+                
+                return rutaFinal;
             }
-            System.out.println("Falla de compatibilidad: Pasajero está muy lejos de la ruta del chofer");
         }
         System.out.println("Compatibles 0%: Ambas personas no se dirigen al mismo destino");
-        return false; 
+        return rutaFinal; 
     }
     
     public static void main(String[] args) {
         Connection con = ConnectionFactory.getConnection();
+        System.out.println("Estableciendo conexión con " + ConnectionFactory.getDBHOST());
         /*
         MapboxDirections.Builder client;
         
@@ -101,7 +110,7 @@ public class ProyectoBD {
         Ruta rC = new Ruta(p1, p2);
         Ruta rP = new Ruta(p3, p4);
         
-        System.out.println(checkCompatibilidad(rC, rP));
+        //System.out.println(checkCompatibilidad(rC, rP));
         
         try {
         //Conexión con Base de Datos de VM
@@ -117,12 +126,16 @@ public class ProyectoBD {
             System.out.println("Conexión exitosa");
         }
             DAOUser dU = new DAOUser();
-            Usuario u = new Usuario(2, "Marcos", "Pérez Jiménez", "414123456", "12345");
-
-            dU.getAll();
+            DAOFriend dF = new DAOFriend();
+            User v = new User(1, "José", "Paz", "094974932", "12345");
+            User u = new User(2, "Marcos", "Pérez Jiménez", "414123456", "12345");
+            
+            Friend f = new Friend(1, 2);
+            
+            dF.insert(f);
             
             
-            
+ 
         }catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
         }

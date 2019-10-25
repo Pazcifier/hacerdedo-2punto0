@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package DAO;
-import Model.Usuario;
+import Model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,32 +14,32 @@ import com.mycompany.hacerdedo.punto0.ConnectionFactory;
  *
  * @author estudiante.fit
  */
-public class DAOUser implements DAOInterface<Usuario> {
+public class DAOUser implements DAOInterface<User> {
     
-    private Usuario extraer(ResultSet rs) throws SQLException {
-        Usuario u = new Usuario();
+    private User extract(ResultSet rs) throws SQLException {
+        User u = new User();
                 
-        u.setCedula(rs.getInt("cedula"));
-        u.setNombre(rs.getString("nombre"));
-        u.setApellido(rs.getString("apellido"));
-        u.setTelefono(rs.getString("telefono"));
-        u.setRating(rs.getInt("rating"));
-        u.setTipo(rs.getString("tipo"));
+        u.setId(rs.getInt("id"));
+        u.setName(rs.getString("name"));
+        u.setLast_name(rs.getString("last_name"));
+        u.setPhone(rs.getString("phone"));
+        u.setRating(rs.getDouble("rating"));
+        u.setType(rs.getString("type"));
         u.setPassword(rs.getString("password"));
                 
         return u;
     }
     
     @Override
-    public Usuario get(int cedula) {
+    public User get(int id) {
         Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT * FROM usuario WHERE cedula = " + cedula;
+        String query = String.format("SELECT * FROM users WHERE id = %s", id);
         try {
             Statement selectOne = con.createStatement();
             ResultSet rs = selectOne.executeQuery(query);
             
             while(rs.next()) {
-                extraer(rs);
+                extract(rs);
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
@@ -51,16 +51,16 @@ public class DAOUser implements DAOInterface<Usuario> {
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public List<User> getAll() {
         Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT * FROM usuario";
-        List<Usuario> usuarios = new ArrayList<Usuario>();
+        String query = "SELECT * FROM users";
+        List<User> usuarios = new ArrayList<User>();
         try {
             Statement selectAll = con.createStatement();
             ResultSet rs = selectAll.executeQuery(query);
             
             while (rs.next()) {
-                Usuario u = extraer(rs);
+                User u = extract(rs);
                 usuarios.add(u);
             }
             return usuarios;
@@ -74,16 +74,16 @@ public class DAOUser implements DAOInterface<Usuario> {
     }
 
     @Override
-    public boolean insert(Usuario u) {
+    public boolean insert(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = "INSERT INTO usuario(cedula, nombre, apellido, telefono, password) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users(id, name, last_name, phone, password) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             if (ps != null) {
-                ps.setInt(1, u.getCedula());
-                ps.setString(2, u.getNombre());
-                ps.setString(3, u.getApellido());
-                ps.setString(4, u.getTelefono());
+                ps.setInt(1, u.getId());
+                ps.setString(2, u.getName());
+                ps.setString(3, u.getLast_name());
+                ps.setString(4, u.getPhone());
                 ps.setString(5, u.getPassword());
                 
                 int i = ps.executeUpdate();
@@ -102,14 +102,14 @@ public class DAOUser implements DAOInterface<Usuario> {
     }
 
     @Override
-    public boolean update(Usuario u) {
+    public boolean update(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("UPDATE usuario SET nombre = ?, apellido = ?, telefono = ?, password = ? WHERE cedula = ?");
+        String query = String.format("UPDATE users SET name = ?, last_name = ?, phone = ?, password = ? WHERE id = ?");
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getApellido());
-            ps.setString(3, u.getTelefono());
+            ps.setString(1, u.getName());
+            ps.setString(2, u.getLast_name());
+            ps.setString(3, u.getPhone());
             ps.setString(4, u.getPassword());
             
             int i = ps.executeUpdate();
@@ -127,9 +127,9 @@ public class DAOUser implements DAOInterface<Usuario> {
     }
 
     @Override
-    public boolean delete(Usuario u) {
+    public boolean delete(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("DELETE FROM usuario WHERE cedula = %s", u.getCedula());
+        String query = String.format("DELETE FROM users WHERE id = %s", u.getId());
         try {
             Statement delete = con.createStatement();
             int i = delete.executeUpdate(query);

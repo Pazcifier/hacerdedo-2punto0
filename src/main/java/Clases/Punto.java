@@ -20,6 +20,8 @@ public class Punto {
         longitud = lon;
         latitud = lat;
     }
+
+    Punto() {}
     
     public ArrayList<Double> getPunto() {
         ArrayList<Double> punto = new ArrayList<Double>();

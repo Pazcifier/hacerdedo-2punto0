@@ -9,72 +9,55 @@ package Model;
  *
  * @author estudiante.fit
  */
-public class Usuario {
-    private int cedula;
-    private String nombre;
-    private String apellido;
-    private String telefono;
-    private int rating = 0;
-    private String tipo = "Pasajero";
+public class User {
+    private int id;
+    private String name;
+    private String last_name;
+    private String phone;
     private String password;
+    private double rating = 0;
+    private String type = "Passenger";
     
-    public Usuario(int cedula, String nombre, String apellido, String telefono, String password) {
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
+    public User(int id, String name, String last_name, String phone, String password) {
+        this.id = id;
+        this.name = name;
+        this.last_name = last_name;
+        this.phone = phone;
         this.password = password;
     }
 
-    public Usuario() {
-    }
-    
-    public int getCedula() {
-        return cedula;
+    public User() {}
+
+    public int getId() {
+        return id;
     }
 
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -84,4 +67,21 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
 }
