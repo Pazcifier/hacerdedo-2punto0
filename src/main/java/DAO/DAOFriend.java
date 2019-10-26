@@ -6,7 +6,7 @@
 package DAO;
 
 import Model.Friend;
-import com.mycompany.hacerdedo.punto0.ConnectionFactory;
+import DB.ConnectionFactory;
 import java.sql.*;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -108,6 +108,8 @@ public class DAOFriend implements DAOInterface<Friend>{
         return false;
     }
 
+    
+    //Revisar bien este
     @Override
     public boolean delete(Friend f) {
         Connection con = ConnectionFactory.getConnection();

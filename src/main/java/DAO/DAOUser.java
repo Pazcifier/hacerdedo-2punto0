@@ -8,7 +8,7 @@ import Model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.mycompany.hacerdedo.punto0.ConnectionFactory;
+import DB.ConnectionFactory;
 
 /**
  *

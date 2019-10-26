@@ -6,7 +6,7 @@
 package DAO;
 
 import Model.Vehicle;
-import com.mycompany.hacerdedo.punto0.ConnectionFactory;
+import DB.ConnectionFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
