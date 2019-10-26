@@ -5,10 +5,11 @@
  */
 package com.mycompany.hacerdedo.punto0;
 
+import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.MapboxDirections;
-import com.mapbox.api.directions.v5.models.DirectionsRoute;
-import com.mapbox.api.matching.v5.models.MapMatchingResponse;
+import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.geojson.Point;
+import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,12 +19,25 @@ import retrofit2.Response;
  * @author estudiante.fit
  */
 public class test {
-    private Point directionsOriginPoint = Point.fromLngLat(24.9383791, 60.1698556);
-    public void getRoute(Point destination) {
+    private static String TOKEN = "pk.eyJ1IjoicGF6Y2lmaWVyIiwiYSI6ImNrMjRyYjg5MzBhbWszb24xN3QxeDBiem4ifQ.aMMJqTUJrPzVa18k75z8bg";
+    
+    public void obtenerRuta(Point origen, Point destino) throws IOException {
+        Point casa = Point.fromLngLat(-34.870303, -56.015101);
         MapboxDirections.Builder client = MapboxDirections.builder();
-        client.origin(directionsOriginPoint);
-        client.destination(destination);
-        client.accessToken("pk.eyJ1IjoicGF6Y2lmaWVyIiwiYSI6ImNrMjRyYjg5MzBhbWszb24xN3QxeDBiem4ifQ.aMMJqTUJrPzVa18k75z8bg");
-        System.out.println(client.build().toString()); //IMPORTANTE: Este tiene los datos de toda la ruta
+        client.origin(origen);
+        client.destination(destino);
+        client.accessToken(TOKEN);
+        client.addWaypoint(origen);
+        client.addWaypoint(destino);
+        //client.overview(DirectionsCriteria.OVERVIEW_FULL);
+        client.profile(DirectionsCriteria.PROFILE_DRIVING);
+        System.out.println(client.build().toString());
+        
+        Response<DirectionsResponse> respuesta = client.build().executeCall();
+        System.out.println(respuesta.toString());
+        
+        
+        
+        System.out.println(respuesta.body().routes().get(0));
     }
 }

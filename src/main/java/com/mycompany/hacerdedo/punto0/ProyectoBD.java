@@ -5,6 +5,7 @@
  */
 package com.mycompany.hacerdedo.punto0;
 
+import DB.ConnectionFactory;
 import Clases.*;
 import DAO.DAOFriend;
 import Model.User;
@@ -14,16 +15,14 @@ import Model.Friend;
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.geojson.Point;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.*;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 
 /**
  *
  * @author estudiante.fit
  */
+
 public class ProyectoBD {
     private static void login(Connection con, int cedula, String password) throws SQLException {
         try {
@@ -125,14 +124,10 @@ public class ProyectoBD {
         if (!con.isClosed()) {
             System.out.println("Conexión exitosa");
         }
-            DAOUser dU = new DAOUser();
-            DAOFriend dF = new DAOFriend();
-            User v = new User(1, "José", "Paz", "094974932", "12345");
-            User u = new User(2, "Marcos", "Pérez Jiménez", "414123456", "12345");
-            
-            Friend f = new Friend(1, 2);
-            
-            dF.insert(f);
+            test test = new test();
+            Point origen = Point.fromLngLat(-34.8411056,-55.9945361);
+            Point destination = Point.fromLngLat(-34.8811342,-56.083531);
+            test.obtenerRuta(origen, destination);
             
             
  
