@@ -5,6 +5,8 @@
  */
 package Panels;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sebaa
@@ -52,6 +54,11 @@ public class RegisterFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         okButton1.setText("OK");
+        okButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButton1ActionPerformed(evt);
+            }
+        });
 
         ciLabel.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         ciLabel.setText("Cédula");
@@ -164,6 +171,11 @@ public class RegisterFrame extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void okButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButton1ActionPerformed
+        JOptionPane.showMessageDialog(this, "Algo haría");
+        this.dispose();
+    }//GEN-LAST:event_okButton1ActionPerformed
 
     /**
      * @param args the command line arguments
