@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author estudiante.fit
@@ -15,8 +17,9 @@ public class User {
     private String surname;
     private String telephone;
     private String password;
-    private double rating = 0;
+    private double rating = 0.0;
     private String type = "Passenger";
+    private ArrayList<User> recommended = new ArrayList<User>();
     
     public User(int id, String name, String last_name, String phone, String password) {
         this.ci = id;
@@ -82,6 +85,19 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public ArrayList<User> getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(ArrayList<User> recommended) {
+        this.recommended = recommended;
+    }
+    
+    @Override
+    public String toString() {
+        return "User{" + "ci=" + ci + ", name=" + name + ", surname=" + surname + ", telephone=" + telephone + ", password=" + password + ", rating=" + rating + ", type=" + type + '}';
     }
     
 }
