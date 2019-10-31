@@ -9,14 +9,21 @@ package Panels;
  *
  * @author Sebaa
  */
-public class RegisterPanel extends javax.swing.JPanel {
+public class RegisterFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RegisterPanel
-     */
-    public RegisterPanel() {
+    public static RegisterFrame rf;
+    public RegisterFrame() {
         initComponents();
     }
+    public static RegisterFrame initRegisterFrame()
+    {
+        if (rf == null) {
+            rf = new RegisterFrame();
+        }
+        return rf;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,9 +34,10 @@ public class RegisterPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cancelButton = new javax.swing.JButton();
         okButton1 = new javax.swing.JButton();
+        srnameTextField1 = new javax.swing.JTextField();
         ciLabel = new javax.swing.JLabel();
+        registerLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         srnameLabel = new javax.swing.JLabel();
         telLabel = new javax.swing.JLabel();
@@ -38,18 +46,19 @@ public class RegisterPanel extends javax.swing.JPanel {
         ciTextField = new javax.swing.JTextField();
         telTextField = new javax.swing.JTextField();
         passTextField1 = new javax.swing.JTextField();
+        cancelButton = new javax.swing.JButton();
         nameTextField1 = new javax.swing.JTextField();
-        srnameTextField1 = new javax.swing.JTextField();
-        registerLabel = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(102, 153, 255));
-
-        cancelButton.setText("Cancel");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         okButton1.setText("OK");
 
         ciLabel.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         ciLabel.setText("Cédula");
+
+        registerLabel.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
+        registerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        registerLabel.setText("REGISTRO");
 
         nameLabel.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         nameLabel.setText("Nombre");
@@ -65,12 +74,15 @@ public class RegisterPanel extends javax.swing.JPanel {
 
         jLabel1.setText("*Todos los datos son obligatorios");
 
-        registerLabel.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        registerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        registerLabel.setText("REGISTRO");
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -110,14 +122,14 @@ public class RegisterPanel extends javax.swing.JPanel {
                                 .addComponent(telLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(passTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(registerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ciLabel)
                     .addComponent(ciTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,8 +157,48 @@ public class RegisterPanel extends javax.swing.JPanel {
                     .addComponent(okButton1))
                 .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(RegisterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(RegisterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(RegisterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(RegisterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new RegisterFrame().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

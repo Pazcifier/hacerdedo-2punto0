@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,6 +48,11 @@ public class LoginFrame extends javax.swing.JFrame {
 
         registerButton.setBackground(new java.awt.Color(204, 204, 204));
         registerButton.setText("Registrarse");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
 
         nameAppLabel1.setBackground(new java.awt.Color(255, 51, 51));
         nameAppLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
@@ -127,26 +133,31 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_userTextFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        Connection con = ConnectionFactory.getConnection();
         
-        System.out.println(this.userTextField.getText());
-        System.out.println(this.jPasswordField.getText());
+        if (this.userTextField.getText().isEmpty() && this.jPasswordField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Faltan datos");
+        } else {
+        
+        Connection con = ConnectionFactory.getConnection();
         try {
             Statement select = con.createStatement();
             String login = String.format("SELECT * FROM users WHERE ci = %s AND password = '%s'", 
                     this.userTextField.getText(), this.jPasswordField.getText());
             
             select.executeQuery(login);
-            System.out.println("Login exitoso");
-            JDialog d = new JDialog(this, "ALGO SALIO");
-            d.show();
-        
+            
         } catch(SQLException sqle) {
-            System.out.println("Usuario o contraseña incorrectos");
+            JOptionPane.showMessageDialog(this, "Error, verifique datos ");
         }
-        
+        }   
     // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        RegisterFrame.initRegisterFrame();
+        RegisterFrame.initRegisterFrame().setVisible(true);
+        
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
      * @param args the command line arguments
