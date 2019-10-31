@@ -91,8 +91,8 @@ public class ProyectoBD {
     }
     
     public static void main(String[] args) {
+        System.out.println("Estableciendo conexión con base de datos");
         Connection con = ConnectionFactory.getConnection();
-        System.out.println("Estableciendo conexión con " + ConnectionFactory.getDBHOST());
         /*
         MapboxDirections.Builder client;
         
