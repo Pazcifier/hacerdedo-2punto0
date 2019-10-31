@@ -10,30 +10,30 @@ package Model;
  * @author estudiante.fit
  */
 public class User {
-    private int id;
+    private int ci;
     private String name;
-    private String last_name;
-    private String phone;
+    private String surname;
+    private String telephone;
     private String password;
     private double rating = 0;
     private String type = "Passenger";
     
     public User(int id, String name, String last_name, String phone, String password) {
-        this.id = id;
+        this.ci = id;
         this.name = name;
-        this.last_name = last_name;
-        this.phone = phone;
+        this.surname = last_name;
+        this.telephone = phone;
         this.password = password;
     }
 
     public User() {}
 
-    public int getId() {
-        return id;
+    public int getCi() {
+        return ci;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCi(int id) {
+        this.ci = id;
     }
 
     public String getName() {
@@ -44,20 +44,20 @@ public class User {
         this.name = name;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setSurname(String last_name) {
+        this.surname = last_name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelephone(String phone) {
+        this.telephone = phone;
     }
 
     public String getPassword() {
