@@ -148,6 +148,8 @@ public class LoginFrame extends javax.swing.JFrame {
             
         } catch(SQLException sqle) {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
+        }finally {
+            ConnectionFactory.closeConnection(con);
         }
         }   
     // TODO add your handling code here:
