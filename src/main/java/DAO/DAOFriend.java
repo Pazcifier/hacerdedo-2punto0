@@ -21,24 +21,31 @@ public class DAOFriend implements DAOInterface<Friend>{
     private Friend extract(ResultSet rs) throws SQLException {
         Friend f = new Friend();
                 
-        f.setUser_id(rs.getInt("user_id"));
-        f.setFriend_id(rs.getInt("friend_id"));
+        f.setCi_user(rs.getInt("ci_user"));
+        f.setCi_friend(rs.getInt("ci_friend"));
                 
         return f;
     }
     
     @Override
     public Friend get(int id) {
+        return null;
+    }
+
+    public List<Friend> getAllFromUser(int ci) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("SELECT * FROM friends WHERE plate = %s", id);
+        String query = String.format("SELECT * FROM friends WHERE ci_user = '%s'", ci);
+        List<Friend> friends = new ArrayList<Friend>();
         try {
-            Statement selectOne = con.createStatement();
-            ResultSet rs = selectOne.executeQuery(query);
+            Statement selectAll = con.createStatement();
+            ResultSet rs = selectAll.executeQuery(query);
             
-            while(rs.next()) {
-                extract(rs);
+            while (rs.next()) {
+                Friend v = extract(rs);
+                friends.add(v);
             }
-        } catch(SQLException sqle) {
+            return friends;
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         finally {
@@ -46,7 +53,7 @@ public class DAOFriend implements DAOInterface<Friend>{
         }
         return null;
     }
-
+    
     @Override
     public List<Friend> getAll() {
         Connection con = ConnectionFactory.getConnection();
@@ -73,18 +80,18 @@ public class DAOFriend implements DAOInterface<Friend>{
     @Override
     public boolean insert(Friend f) {
         Connection con = ConnectionFactory.getConnection();
-        String query = "INSERT INTO friends(user_id, friend_id) VALUES (?, ?)";
+        String query = "INSERT INTO friends(ci_user, ci_friend) VALUES (?, ?)";
         try {
             con.setAutoCommit(false);
             PreparedStatement ps = con.prepareStatement(query);
             if (ps != null) {
-                ps.setInt(1, f.getUser_id());
-                ps.setInt(2, f.getFriend_id());
+                ps.setInt(1, f.getCi_user());
+                ps.setInt(2, f.getCi_friend());
                 
                 int i = ps.executeUpdate();
                 
-                ps.setInt(1, f.getFriend_id());
-                ps.setInt(2, f.getUser_id());
+                ps.setInt(1, f.getCi_friend());
+                ps.setInt(2, f.getCi_user());
                 
                 int j = ps.executeUpdate();
                 
@@ -113,13 +120,26 @@ public class DAOFriend implements DAOInterface<Friend>{
     @Override
     public boolean delete(Friend f) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("DELETE FROM friends WHERE user_id = '%s'", f.getUser_id());
+        String query = "DELETE FROM friends WHERE ci_user = ? AND ci_friend = ?";
         try {
-            Statement delete = con.createStatement();
-            int i = delete.executeUpdate(query);
-            
-            if (i == 1) {
-                return true;
+            con.setAutoCommit(false);
+            PreparedStatement ps = con.prepareStatement(query);
+            if (ps != null) {
+                ps.setInt(1, f.getCi_user());
+                ps.setInt(2, f.getCi_friend());
+                
+                int i = ps.executeUpdate();
+                
+                ps.setInt(1, f.getCi_friend());
+                ps.setInt(2, f.getCi_user());
+                
+                int j = ps.executeUpdate();
+                
+                con.setAutoCommit(true);
+                
+                if (i == 1 && j == 1) {
+                    return true;
+                }
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -129,5 +149,4 @@ public class DAOFriend implements DAOInterface<Friend>{
         }
         return false;
     }
-
 }

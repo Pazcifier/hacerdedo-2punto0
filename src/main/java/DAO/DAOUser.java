@@ -19,10 +19,10 @@ public class DAOUser implements DAOInterface<User> {
     private User extract(ResultSet rs) throws SQLException {
         User u = new User();
                 
-        u.setId(rs.getInt("id"));
+        u.setCi(rs.getInt("ci"));
         u.setName(rs.getString("name"));
-        u.setLast_name(rs.getString("last_name"));
-        u.setPhone(rs.getString("phone"));
+        u.setSurname(rs.getString("surname"));
+        u.setTelephone(rs.getString("telephone"));
         u.setRating(rs.getDouble("rating"));
         u.setType(rs.getString("type"));
         u.setPassword(rs.getString("password"));
@@ -33,13 +33,13 @@ public class DAOUser implements DAOInterface<User> {
     @Override
     public User get(int id) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("SELECT * FROM users WHERE id = %s", id);
+        String query = String.format("SELECT * FROM users WHERE ci = '%s'", id);
         try {
             Statement selectOne = con.createStatement();
             ResultSet rs = selectOne.executeQuery(query);
             
             while(rs.next()) {
-                extract(rs);
+                return extract(rs);
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
@@ -76,14 +76,14 @@ public class DAOUser implements DAOInterface<User> {
     @Override
     public boolean insert(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = "INSERT INTO users(id, name, last_name, phone, password) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users(ci, name, surname, telephone, password) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             if (ps != null) {
-                ps.setInt(1, u.getId());
+                ps.setInt(1, u.getCi());
                 ps.setString(2, u.getName());
-                ps.setString(3, u.getLast_name());
-                ps.setString(4, u.getPhone());
+                ps.setString(3, u.getSurname());
+                ps.setString(4, u.getTelephone());
                 ps.setString(5, u.getPassword());
                 
                 int i = ps.executeUpdate();
@@ -104,12 +104,12 @@ public class DAOUser implements DAOInterface<User> {
     @Override
     public boolean update(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("UPDATE users SET name = ?, last_name = ?, phone = ?, password = ? WHERE id = ?");
+        String query = String.format("UPDATE users SET name = ?, surname = ?, telephone = ?, password = ? WHERE ci = ?");
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, u.getName());
-            ps.setString(2, u.getLast_name());
-            ps.setString(3, u.getPhone());
+            ps.setString(2, u.getSurname());
+            ps.setString(3, u.getTelephone());
             ps.setString(4, u.getPassword());
             
             int i = ps.executeUpdate();
@@ -129,7 +129,7 @@ public class DAOUser implements DAOInterface<User> {
     @Override
     public boolean delete(User u) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("DELETE FROM users WHERE id = %s", u.getId());
+        String query = String.format("DELETE FROM users WHERE ci = '%s'", u.getCi());
         try {
             Statement delete = con.createStatement();
             int i = delete.executeUpdate(query);

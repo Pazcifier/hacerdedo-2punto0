@@ -1,11 +1,11 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this temmatricula file, choose Tools | Temmatriculas
+ * and open the temmatricula in the editor.
  */
 package DAO;
 
-import Model.Vehicle;
+import Model.Conveyance;
 import DB.ConnectionFactory;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,14 +15,15 @@ import java.util.List;
  *
  * @author estudiante.fit
  */
-public class DAOVehicle implements DAOInterface<Vehicle> {
+public class DAOConveyance implements DAOInterface<Conveyance> {
 
-    private Vehicle extract(ResultSet rs) throws SQLException {
-        Vehicle v = new Vehicle();
+    private Conveyance extract(ResultSet rs) throws SQLException {
+        Conveyance v = new Conveyance();
                 
-        v.setPlate(rs.getString("plate"));
-        v.setOwner_id(rs.getInt("owner_id"));
+        v.setMatricula(rs.getString("matricula"));
+        v.setCi_owner(rs.getInt("ci_owner"));
         v.setModel(rs.getString("model"));
+        v.setColor(rs.getString("color"));
         v.setType(rs.getString("type"));
         v.setNumber_seats(rs.getInt("number_seats"));
                 
@@ -30,15 +31,15 @@ public class DAOVehicle implements DAOInterface<Vehicle> {
     }
     
     @Override
-    public Vehicle get(int plate) {
+    public Conveyance get(int matricula) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("SELECT * FROM vehicles WHERE plate = %s", plate);
+        String query = String.format("SELECT * FROM vehicles WHERE matricula = %s", matricula);
         try {
             Statement selectOne = con.createStatement();
             ResultSet rs = selectOne.executeQuery(query);
             
             while(rs.next()) {
-                extract(rs);
+                return extract(rs);
             }
         } catch(SQLException sqle) {
             sqle.printStackTrace();
@@ -50,16 +51,16 @@ public class DAOVehicle implements DAOInterface<Vehicle> {
     }
 
     @Override
-    public List<Vehicle> getAll() {
+    public List<Conveyance> getAll() {
         Connection con = ConnectionFactory.getConnection();
         String query = "SELECT * FROM vehicles";
-        List<Vehicle> vehicles = new ArrayList<Vehicle>();
+        List<Conveyance> vehicles = new ArrayList<Conveyance>();
         try {
             Statement selectAll = con.createStatement();
             ResultSet rs = selectAll.executeQuery(query);
             
             while (rs.next()) {
-                Vehicle v = extract(rs);
+                Conveyance v = extract(rs);
                 vehicles.add(v);
             }
             return vehicles;
@@ -71,19 +72,42 @@ public class DAOVehicle implements DAOInterface<Vehicle> {
         }
         return null;
     }
+    
+    public List<Conveyance> getAllFromUser(int ci) {
+        Connection con = ConnectionFactory.getConnection();
+        String query = String.format("SELECT * FROM vehicles WHERE ci_owner = '%s'", ci);
+        List<Conveyance> vehicles = new ArrayList<Conveyance>();
+        try {
+            Statement selectAll = con.createStatement();
+            ResultSet rs = selectAll.executeQuery(query);
+            
+            while (rs.next()) {
+                Conveyance v = extract(rs);
+                vehicles.add(v);
+            }
+            return vehicles;
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        finally {
+            ConnectionFactory.closeConnection(con);
+        }
+        return null;    
+    }
 
     @Override
-    public boolean insert(Vehicle v) {
+    public boolean insert(Conveyance v) {
         Connection con = ConnectionFactory.getConnection();
-        String query = "INSERT INTO vehicles(plate, owner_id, modle, type, number_seats) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO vehicles(matricula, ci_owner, model, color, type, number_seats) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             if (ps != null) {
-                ps.setString(1, v.getPlate());
-                ps.setInt(2, v.getOwner_id());
+                ps.setString(1, v.getMatricula());
+                ps.setInt(2, v.getCi_owner());
                 ps.setString(3, v.getModel());
-                ps.setString(4, v.getType());
-                ps.setInt(5, v.getNumber_seats());
+                ps.setString(4, v.getColor());
+                ps.setString(5, v.getType());
+                ps.setInt(6, v.getNumber_seats());
                 
                 int i = ps.executeUpdate();
                 
@@ -101,14 +125,15 @@ public class DAOVehicle implements DAOInterface<Vehicle> {
     }
 
     @Override
-    public boolean update(Vehicle v) {
+    public boolean update(Conveyance v) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("UPDATE vehicles SET model = ?, type = ?, number_seats = ? WHERE plate = ?");
+        String query = String.format("UPDATE vehicles SET model = ?, color = ?, type = ?, number_seats = ? WHERE matricula = ?");
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, v.getModel());
-            ps.setString(2, v.getType());
-            ps.setInt(3, v.getNumber_seats());
+            ps.setString(2, v.getColor());
+            ps.setString(3, v.getType());
+            ps.setInt(4, v.getNumber_seats());
             
             int i = ps.executeUpdate();
             
@@ -125,9 +150,9 @@ public class DAOVehicle implements DAOInterface<Vehicle> {
     }
 
     @Override
-    public boolean delete(Vehicle v) {
+    public boolean delete(Conveyance v) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("DELETE FROM vehicles WHERE plate = '%s'", v.getPlate());
+        String query = String.format("DELETE FROM vehicles WHERE matricula = '%s'", v.getMatricula());
         try {
             Statement delete = con.createStatement();
             int i = delete.executeUpdate(query);
