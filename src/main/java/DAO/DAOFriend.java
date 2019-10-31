@@ -116,7 +116,6 @@ public class DAOFriend implements DAOInterface<Friend>{
     }
 
     
-    //Revisar bien este
     @Override
     public boolean delete(Friend f) {
         Connection con = ConnectionFactory.getConnection();

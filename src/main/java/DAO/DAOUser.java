@@ -19,7 +19,7 @@ public class DAOUser implements DAOInterface<User> {
     private User extract(ResultSet rs) throws SQLException {
         User u = new User();
                 
-        u.setCi(rs.getInt("ci"));
+        u.setCi(Integer.parseInt(rs.getString("ci")));
         u.setName(rs.getString("name"));
         u.setSurname(rs.getString("surname"));
         u.setTelephone(rs.getString("telephone"));

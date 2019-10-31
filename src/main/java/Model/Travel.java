@@ -14,7 +14,7 @@ public class Travel {
     int ci_passenger;
     //POR CAMBIAR: Dates
     String date_ini;
-    String date_end;
+    String date_end = null;
     String matricula_vehicle;
     int seats_available;
     int companions;
