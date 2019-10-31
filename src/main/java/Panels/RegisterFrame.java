@@ -5,6 +5,8 @@
  */
 package Panels;
 
+import DAO.DAOUser;
+import Model.User;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,8 +38,8 @@ public class RegisterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        okButton1 = new javax.swing.JButton();
-        srnameTextField1 = new javax.swing.JTextField();
+        okButton = new javax.swing.JButton();
+        srnameTextField = new javax.swing.JTextField();
         ciLabel = new javax.swing.JLabel();
         registerLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
@@ -47,16 +49,16 @@ public class RegisterFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         ciTextField = new javax.swing.JTextField();
         telTextField = new javax.swing.JTextField();
-        passTextField1 = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
-        nameTextField1 = new javax.swing.JTextField();
+        nameTextField = new javax.swing.JTextField();
+        PasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        okButton1.setText("OK");
-        okButton1.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButton1ActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
 
@@ -88,6 +90,12 @@ public class RegisterFrame extends javax.swing.JFrame {
             }
         });
 
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,7 +104,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(okButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
@@ -119,8 +127,8 @@ public class RegisterFrame extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(telTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(srnameTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(nameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(srnameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(ciLabel)
                                 .addGap(18, 18, 18)
@@ -128,7 +136,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(telLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -143,14 +151,14 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(telLabel1)
-                    .addComponent(passTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(srnameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(srnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(srnameLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -161,7 +169,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
-                    .addComponent(okButton1))
+                    .addComponent(okButton))
                 .addContainerGap())
         );
 
@@ -172,10 +180,31 @@ public class RegisterFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void okButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButton1ActionPerformed
-        JOptionPane.showMessageDialog(this, "Algo haría");
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        
+        if (this.ciTextField.getText().isEmpty() || this.nameTextField.getText().isEmpty() ||
+                this.PasswordField.getText().isEmpty() || this.telTextField.getText().isEmpty() ||
+                this.srnameTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error, verifique datos ");
+        } else 
+        {
+            User us = new User(Integer.parseInt(this.ciTextField.getText()),this.PasswordField.getText(),
+                   this.nameTextField.getText(),this.srnameTextField.getText(),this.telTextField.getText());
+            DAOUser dUser = new DAOUser();
+            if (dUser.insert(us)) {
+                JOptionPane.showMessageDialog(this, "Usuario Insertado");
+            } else 
+            {
+                JOptionPane.showMessageDialog(this, "Usuario no se ha insertado");
+            }
+            
+        }
         this.dispose();
-    }//GEN-LAST:event_okButton1ActionPerformed
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,17 +242,17 @@ public class RegisterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField PasswordField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel ciLabel;
     private javax.swing.JTextField ciTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JTextField nameTextField1;
-    private javax.swing.JButton okButton1;
-    private javax.swing.JTextField passTextField1;
+    private javax.swing.JTextField nameTextField;
+    private javax.swing.JButton okButton;
     private javax.swing.JLabel registerLabel;
     private javax.swing.JLabel srnameLabel;
-    private javax.swing.JTextField srnameTextField1;
+    private javax.swing.JTextField srnameTextField;
     private javax.swing.JLabel telLabel;
     private javax.swing.JLabel telLabel1;
     private javax.swing.JTextField telTextField;
