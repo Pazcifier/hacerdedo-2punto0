@@ -35,5 +35,10 @@ public class Friend {
     public void setCi_friend(int friend_id) {
         this.ci_friend = friend_id;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Friend{" + "ci_user=" + ci_user + ", ci_friend=" + ci_friend + '}';
+    }
+
 }

@@ -17,6 +17,7 @@ import com.mapbox.geojson.Point;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,17 +25,29 @@ import java.util.ArrayList;
  */
 
 public class ProyectoBD {
-    private static void login(Connection con, int cedula, String password) throws SQLException {
+    private static void login(Connection con, String cedula, String password) throws SQLException {
         try {
             Statement select = con.createStatement();
-            String login = String.format("SELECT * FROM usuario WHERE cedula = %s AND password = '%s'", 
+            String login = String.format("SELECT * FROM users WHERE ci = '%s' AND password = '%s'", 
                     cedula, password);
             
-            select.executeQuery(login);
-            System.out.println("Login exitoso");
+            ResultSet rs = select.executeQuery(login);
+            
+            int i = 0;
+            while(rs.next()) {
+                i++;
+            }
+            
+            if (i == 1) {
+                System.out.println("Login exitoso.");
+            }
+            else {
+                System.out.println("Usuario o contraseña incorrectos");
+            }
+            
             
         } catch(SQLException sqle) {
-            System.out.println("Usuario o contraseña incorrectos");
+            System.out.println("Error de conexión a la base de datos: " + sqle);
         }
     }
     
@@ -46,6 +59,8 @@ public class ProyectoBD {
         numerador = Math.abs(numerador);
         double denominador = mChofer*mChofer + 1;
         denominador = Math.sqrt(denominador);
+        
+        System.out.println(numerador/denominador);
         
         return numerador/denominador;    
     }
@@ -114,6 +129,7 @@ public class ProyectoBD {
         try {
         //Conexión con Base de Datos de VM
         //Conexión = jbdc:postgresql://IP/NombreBD,usuario,contraseña
+        
         /*
         con =
             DriverManager.getConnection("jdbc:postgresql://192.168.56.101/basededatos1","postgres","12345");
@@ -124,20 +140,48 @@ public class ProyectoBD {
         if (!con.isClosed()) {
             System.out.println("Conexión exitosa");
         }
+            /*
             test test = new test();
             Point origen = Point.fromLngLat(-34.8411056,-55.9945361);
             Point destination = Point.fromLngLat(-34.8811342,-56.083531);
             test.obtenerRuta(origen, destination);
+            */
             
+            DAOUser u = new DAOUser();
+            User user = new User(12345672, "Jose", "Paz", "094974932", "123");
+            //u.insert(user);
             
- 
-        }catch(Exception e){
+            DAOFriend f = new DAOFriend();
+            Friend friend = new Friend(63043005, 63341075);
+            //f.insert(friend);
+            
+            System.out.println(u.get(63043005).toString());
+            
+            User usuario = u.get(63341075);
+            
+            List<Friend> amigos = f.getAllFromUser(usuario.getCi());
+            
+            //Más o menos bien, garantizar que no te devuelva a ti mismo y repetidos
+            for (Friend a:amigos) {
+                int cedula = a.getCi_friend();
+                List<Friend> amigosSegundo = f.getAllFromUser(cedula);
+                for (Friend b:amigosSegundo) {
+                    int cedulaB = b.getCi_friend();
+                    User possibleRecommend = u.get(cedulaB);
+                    if ((cedulaB != usuario.getCi()) && !(usuario.getRecommended().contains(possibleRecommend))) {
+                        usuario.getRecommended().add(possibleRecommend);
+                    }
+                }
+            }
+            
+            System.out.println(usuario.getRecommended().toString());
+        
+        } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
         }
         
         finally {
             ConnectionFactory.closeConnection(con);
         }
-    }
-    
+    }   
 }

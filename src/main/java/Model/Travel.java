@@ -14,16 +14,15 @@ public class Travel {
     int ci_passenger;
     //POR CAMBIAR: Dates
     String date_ini;
-    String date_end;
+    String date_end = null;
     String matricula_vehicle;
     int seats_available;
     int companions;
 
-    public Travel(int ci_d, int ci_p, String date_i, String date_e, String matricula, int seats, int companions) {
+    public Travel(int ci_d, int ci_p, String date_i, String matricula, int seats, int companions) {
         this.ci_driver = ci_d;
         this.ci_passenger = ci_p;
         this.date_ini = date_i;
-        this.date_end = date_e;
         this.matricula_vehicle = matricula;
         this.seats_available = seats;
         this.companions = companions;
