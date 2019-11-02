@@ -29,6 +29,14 @@ public class SystemLogic {
     private ArrayList<PostedDriver> driverTravels = new ArrayList<PostedDriver>();
     private ArrayList<PostedPassenger> passengerTravels = new ArrayList<PostedPassenger>();
 
+    public static SystemLogic sl;
+    public static SystemLogic initSystemLogic()
+    {
+        if (sl == null) {
+            sl = new SystemLogic();
+        }
+        return sl;
+    }
     public boolean postDriverTravel(String matricula, Ruta route, int ci, int seats_available) {
         //Validaciones
         driverTravels.add(new PostedDriver(matricula, route, ci, seats_available));
@@ -56,8 +64,9 @@ public class SystemLogic {
     }
     
     
-    public void login(String cedula, String password) throws SQLException {
+    public boolean login(String cedula, String password) throws SQLException {
         Connection con = ConnectionFactory.getConnection();
+        boolean estado =false;
         try {
             Statement select = con.createStatement();
             String login = String.format("SELECT * FROM users WHERE ci = '%s' AND password = '%s'", 
@@ -71,10 +80,7 @@ public class SystemLogic {
             }
             
             if (i == 1) {
-                System.out.println("Login exitoso.");
-            }
-            else {
-                System.out.println("Usuario o contraseña incorrectos");
+                estado = true;
             }
             
             
@@ -84,6 +90,7 @@ public class SystemLogic {
         finally {
             ConnectionFactory.closeConnection(con);
         }
+        return estado;
     }
     
     private double distanciaPuntoRecta(double mChofer, double bChofer, Punto origenPasajero) {        

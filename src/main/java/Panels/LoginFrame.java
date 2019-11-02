@@ -5,7 +5,10 @@
  */
 package Panels;
 
+import DAO.DAOUser;
 import DB.ConnectionFactory;
+import Model.User;
+import com.mycompany.hacerdedo.punto0.SystemLogic;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,10 +24,33 @@ public class LoginFrame extends javax.swing.JFrame {
     /**
      * Creates new form loginFrame
      */
+    public static LoginFrame lf;
+    private User user;
+    private DAOUser daoUser;
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    
     public LoginFrame() {
         initComponents();
-        setBackground(new java.awt.Color(102, 153, 255));
+        SystemLogic.initSystemLogic();
+        daoUser = new DAOUser();
+        this.setLocationRelativeTo(null);
     }
+    
+    public static LoginFrame initLoginFrame()
+    {
+        if (lf == null) {
+            lf = new LoginFrame();
+        }
+        return lf;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,7 +163,26 @@ public class LoginFrame extends javax.swing.JFrame {
         if (this.userTextField.getText().isEmpty() && this.jPasswordField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Faltan datos");
         } else {
-        
+            try {
+                if (SystemLogic.initSystemLogic().login(this.userTextField.getText(), this.jPasswordField.getText()))
+                {
+                    UserFrame.initUserFrame();
+                    this.setVisible(false);
+                    this.user = this.daoUser.get(Integer.parseInt(this.userTextField.getText()));
+                    this.userTextField.setText("");
+                    this.jPasswordField.setText("");
+                    
+                    
+                } else
+                {
+                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectas ");
+                }
+
+            }catch (SQLException qle)
+            {
+                JOptionPane.showMessageDialog(this, "Error, verifique datos ");
+            }
+            /*
         Connection con = ConnectionFactory.getConnection();
         try {
             Statement select = con.createStatement();
@@ -150,7 +195,7 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
         }finally {
             ConnectionFactory.closeConnection(con);
-        }
+        }*/
         }   
     // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
