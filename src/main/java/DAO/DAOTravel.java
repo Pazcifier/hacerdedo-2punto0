@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package DAO;
-
 import Model.Travel;
 import java.util.List;
 import java.sql.*;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
  * @author estudiante.fit
  */
 public class DAOTravel implements DAOInterface<Travel> {
-
+    
     private Travel extract(ResultSet rs) throws SQLException {
         Travel t = new Travel();
                 
