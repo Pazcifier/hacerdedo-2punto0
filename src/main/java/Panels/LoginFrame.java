@@ -145,9 +145,11 @@ public class LoginFrame extends javax.swing.JFrame {
                     this.userTextField.getText(), this.jPasswordField.getText());
             
             select.executeQuery(login);
-            
+            JOptionPane.showMessageDialog(this, "Usted a ingresado buen hombre");
         } catch(SQLException sqle) {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
+        }finally {
+            ConnectionFactory.closeConnection(con);
         }
         }   
     // TODO add your handling code here:
