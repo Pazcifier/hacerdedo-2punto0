@@ -7,16 +7,21 @@ package com.mycompany.hacerdedo.punto0;
 
 import DB.ConnectionFactory;
 import Clases.*;
+import DAO.DAOConveyance;
 import DAO.DAOFriend;
+import DAO.DAOTravel;
 import Model.User;
 import DAO.DAOUser;
+import Model.Conveyance;
 import Model.Friend;
+import Model.Travel;
 
 import com.mapbox.api.directions.v5.MapboxDirections;
 import com.mapbox.geojson.Point;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -105,7 +110,7 @@ public class ProyectoBD {
         return rutaFinal; 
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) {   
         System.out.println("Estableciendo conexión con base de datos");
         Connection con = ConnectionFactory.getConnection();
         /*
@@ -148,9 +153,10 @@ public class ProyectoBD {
             */
             
             DAOUser u = new DAOUser();
-            User user = new User(12345672, "Jose", "Paz", "094974932", "123");
+            User user = new User(63341075, "Jose", "Paz", "094974932", "123");
             //u.insert(user);
             
+            /*
             DAOFriend f = new DAOFriend();
             Friend friend = new Friend(63043005, 63341075);
             //f.insert(friend);
@@ -175,7 +181,22 @@ public class ProyectoBD {
             }
             
             System.out.println(usuario.getRecommended().toString());
-        
+            */
+            DAOConveyance dC = new DAOConveyance();
+            
+            Conveyance c = new Conveyance("SCJ-4489", 63043005, "Hyundai Creta", "Rojo", "CAR", 4);
+            
+            //dC.insert(c);
+            
+            SystemLogic sl = new SystemLogic();
+            
+            sl.postDriverTravel("SCJ-4489", rC, 63043005, 4);
+            sl.postPassengerTravel(rP, 63341075, 0);
+            
+            
+            
+            
+            
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
         }

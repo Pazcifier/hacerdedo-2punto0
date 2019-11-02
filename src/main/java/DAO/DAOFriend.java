@@ -21,15 +21,15 @@ public class DAOFriend implements DAOInterface<Friend>{
     private Friend extract(ResultSet rs) throws SQLException {
         Friend f = new Friend();
                 
-        f.setCi_user(rs.getInt("ci_user"));
-        f.setCi_friend(rs.getInt("ci_friend"));
+        f.setCi_user(Integer.parseInt(rs.getString("ci_user")));
+        f.setCi_friend(Integer.parseInt(rs.getString("ci_friend")));
                 
         return f;
     }
     
     @Override
     public Friend get(int id) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public List<Friend> getAllFromUser(int ci) {
@@ -112,7 +112,7 @@ public class DAOFriend implements DAOInterface<Friend>{
 
     @Override
     public boolean update(Friend f) {
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

@@ -38,29 +38,36 @@ public class SystemLogic {
         return sl;
     }
     public boolean postDriverTravel(String matricula, Ruta route, int ci, int seats_available) {
-        //Validaciones
         driverTravels.add(new PostedDriver(matricula, route, ci, seats_available));
         return true;
     }
     
     public boolean postPassengerTravel(Ruta route, int ci, int companions) {
-        //Validaciones
         passengerTravels.add(new PostedPassenger(route, ci, companions));
         return true;
     }
     
     public void checkPostCompatibillity() {
+        ArrayList<PostedDriver> toDeleteDriver = new ArrayList<PostedDriver>();
+        ArrayList<PostedPassenger> toDeletePassenger = new ArrayList<PostedPassenger>();
+        
         DAOTravel dT = new DAOTravel();
         for (PostedPassenger pP : passengerTravels) {
             for (PostedDriver pD : driverTravels) {
                 if (checkCompatibilidad(pD.getRoute(), pP.getRoute())) {
-                    Travel t = new Travel(pD.getCedula(), pP.getCedula(), "new_date", pD.getMatricula(), pD.getSeats_available(), pP.getCompanions());
-                    dT.insert(t);
-                    driverTravels.remove(pD);
-                    passengerTravels.remove(pP);
+                    Travel t = new Travel(pD.getCedula(), pP.getCedula(), new Timestamp(System.currentTimeMillis()), pD.getMatricula(), pD.getSeats_available(), pP.getCompanions());
+                    if (dT.insert(t)) {
+                        toDeleteDriver.add(pD);
+                        toDeletePassenger.add(pP);
+                    }
+                    else {
+                        System.out.println("Error de inserción");
+                    }
                 }
-            }           
+            }
         }
+        passengerTravels.removeAll(toDeletePassenger);
+        driverTravels.removeAll(toDeleteDriver);
     }
     
     
@@ -101,8 +108,6 @@ public class SystemLogic {
         numerador = Math.abs(numerador);
         double denominador = mChofer*mChofer + 1;
         denominador = Math.sqrt(denominador);
-        
-        System.out.println(numerador/denominador);
         
         return numerador/denominador;    
     }
@@ -162,4 +167,27 @@ public class SystemLogic {
         u.setRecommended(recommended);
         return u.getRecommended();
     }
+
+    public ArrayList<PostedDriver> getDriverTravels() {
+        return driverTravels;
+    }
+
+    public void setDriverTravels(ArrayList<PostedDriver> driverTravels) {
+        this.driverTravels = driverTravels;
+    }
+
+    public ArrayList<PostedPassenger> getPassengerTravels() {
+        return passengerTravels;
+    }
+
+    public void setPassengerTravels(ArrayList<PostedPassenger> passengerTravels) {
+        this.passengerTravels = passengerTravels;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemLogic{" + "driverTravels=" + driverTravels + ", passengerTravels=" + passengerTravels + '}';
+    }
+    
+    
 }

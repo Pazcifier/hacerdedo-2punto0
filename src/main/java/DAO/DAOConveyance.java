@@ -21,7 +21,7 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
         Conveyance v = new Conveyance();
                 
         v.setMatricula(rs.getString("matricula"));
-        v.setCi_owner(rs.getInt("ci_owner"));
+        v.setCi_owner(Integer.parseInt(rs.getString("ci_owner")));
         v.setModel(rs.getString("model"));
         v.setColor(rs.getString("color"));
         v.setType(rs.getString("type"));
@@ -32,8 +32,12 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
     
     @Override
     public Conveyance get(int matricula) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Conveyance getConveyance(String matricula) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("SELECT * FROM vehicles WHERE matricula = %s", matricula);
+        String query = String.format("SELECT * FROM conveyances WHERE matricula = %s", matricula);
         try {
             Statement selectOne = con.createStatement();
             ResultSet rs = selectOne.executeQuery(query);
@@ -49,11 +53,38 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
         }
         return null;
     }
+    
+    public boolean validateOwnerVehicle(String matricula, int cedula) {
+        Connection con = ConnectionFactory.getConnection();
+        String query = String.format("SELECT * FROM conveyances WHERE matricula = '%s' AND ci_owner = '%s'", matricula, cedula);
+        try {
+            Statement select = con.createStatement();
+            ResultSet rs = select.executeQuery(query);
+            
+            int i = 0;
+            while(rs.next()) {
+                i++;
+            }
+            
+            if (i == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch(SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        finally {
+            ConnectionFactory.closeConnection(con);
+        }
+        return false;
+    }
 
     @Override
     public List<Conveyance> getAll() {
         Connection con = ConnectionFactory.getConnection();
-        String query = "SELECT * FROM vehicles";
+        String query = "SELECT * FROM conveyances";
         List<Conveyance> vehicles = new ArrayList<Conveyance>();
         try {
             Statement selectAll = con.createStatement();
@@ -75,7 +106,7 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
     
     public List<Conveyance> getAllFromUser(int ci) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("SELECT * FROM vehicles WHERE ci_owner = '%s'", ci);
+        String query = String.format("SELECT * FROM conveyances WHERE ci_owner = '%s'", ci);
         List<Conveyance> vehicles = new ArrayList<Conveyance>();
         try {
             Statement selectAll = con.createStatement();
@@ -97,8 +128,17 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
 
     @Override
     public boolean insert(Conveyance v) {
+        
+        String matricula = v.getMatricula();
+        String[] matriculaSeparada = matricula.split("-");
+        
+        if (!Validator.onlyLetters(matriculaSeparada[0]) || !Validator.onlyNumbers(matriculaSeparada[1])
+                || !Validator.onlyLetters(v.getColor())) {
+            return false;
+        }
+        
         Connection con = ConnectionFactory.getConnection();
-        String query = "INSERT INTO vehicles(matricula, ci_owner, model, color, type, number_seats) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO conveyances(matricula, ci_owner, model, color, type, number_seats) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             if (ps != null) {
@@ -126,8 +166,13 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
 
     @Override
     public boolean update(Conveyance v) {
+        
+        if (!Validator.onlyLetters(v.getColor())) {
+            return false;
+        }        
+        
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("UPDATE vehicles SET model = ?, color = ?, type = ?, number_seats = ? WHERE matricula = ?");
+        String query = String.format("UPDATE conveyances SET model = ?, color = ?, type = ?, number_seats = ? WHERE matricula = ?");
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, v.getModel());
@@ -152,7 +197,7 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
     @Override
     public boolean delete(Conveyance v) {
         Connection con = ConnectionFactory.getConnection();
-        String query = String.format("DELETE FROM vehicles WHERE matricula = '%s'", v.getMatricula());
+        String query = String.format("DELETE FROM conveyances WHERE matricula = '%s'", v.getMatricula());
         try {
             Statement delete = con.createStatement();
             int i = delete.executeUpdate(query);

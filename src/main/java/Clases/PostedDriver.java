@@ -53,5 +53,12 @@ public class PostedDriver {
     public void setSeats_available(int seats_available) {
         this.seats_available = seats_available;
     }
+
+    @Override
+    public String toString() {
+        return "PostedDriver{" + "matricula=" + matricula + ", route=" + route + ", cedula=" + cedula + ", seats_available=" + seats_available + '}';
+    }
+    
+    
     
 }

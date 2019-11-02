@@ -43,5 +43,11 @@ public class PostedPassenger {
     public void setCompanions(int companions) {
         this.companions = companions;
     }
+
+    @Override
+    public String toString() {
+        return "PostedPassenger{" + "route=" + route + ", cedula=" + cedula + ", companions=" + companions + '}';
+    }
+
     
 }

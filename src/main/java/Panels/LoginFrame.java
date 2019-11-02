@@ -10,6 +10,7 @@ import DB.ConnectionFactory;
 import Model.User;
 import com.mycompany.hacerdedo.punto0.SystemLogic;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JDialog;
@@ -186,11 +187,21 @@ public class LoginFrame extends javax.swing.JFrame {
         Connection con = ConnectionFactory.getConnection();
         try {
             Statement select = con.createStatement();
-            String login = String.format("SELECT * FROM users WHERE ci = %s AND password = '%s'", 
+            String login = String.format("SELECT * FROM users WHERE ci = '%s' AND password = '%s'", 
                     this.userTextField.getText(), this.jPasswordField.getText());
             
-            select.executeQuery(login);
+            ResultSet rs = select.executeQuery(login);
+            int i = 0;
+            while(rs.next()) {
+                i++;
+            }
+            
+            if (i == 1) {
             JOptionPane.showMessageDialog(this, "Usted a ingresado buen hombre");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+            }
         } catch(SQLException sqle) {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
         }finally {

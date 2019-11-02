@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import DB.ConnectionFactory;
+import DAO.Validator;
 
 /**
  *
@@ -75,6 +76,12 @@ public class DAOUser implements DAOInterface<User> {
 
     @Override
     public boolean insert(User u) {
+        
+        if (!Validator.onlyLetters(u.getName()) || !Validator.onlyLetters(u.getSurname())
+                || !Validator.onlyNumbers(u.getTelephone())) {
+            return false;
+        }
+        
         Connection con = ConnectionFactory.getConnection();
         String query = "INSERT INTO users(ci, name, surname, telephone, password) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -103,6 +110,12 @@ public class DAOUser implements DAOInterface<User> {
 
     @Override
     public boolean update(User u) {
+        
+        if (!Validator.onlyLetters(u.getName()) || !Validator.onlyLetters(u.getSurname())
+                || !Validator.onlyNumbers(u.getTelephone())) {
+            return false;
+        }
+        
         Connection con = ConnectionFactory.getConnection();
         String query = String.format("UPDATE users SET name = ?, surname = ?, telephone = ?, password = ? WHERE ci = ?");
         try {
