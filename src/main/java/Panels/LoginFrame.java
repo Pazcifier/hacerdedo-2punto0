@@ -7,7 +7,6 @@ package Panels;
 
 import DB.ConnectionFactory;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JDialog;
@@ -140,60 +139,28 @@ public class LoginFrame extends javax.swing.JFrame {
         } else {
         
         Connection con = ConnectionFactory.getConnection();
-        
-        System.out.println(this.userTextField.getText());
-        System.out.println(this.jPasswordField.getText());
-        
-        try {
-            Statement select = con.createStatement();
-            String login = String.format("SELECT * FROM users WHERE ci = '%s' AND password = '%s'", 
-                    this.userTextField.getText(), this.jPasswordField.getText());
-            
-            ResultSet rs = select.executeQuery(login);
-            
-            int i = 0;
-            while(rs.next()) {
-                i++;
-            }
-            
-            if (i == 1) {
-                System.out.println("Login exitoso.");
-                JDialog d = new JDialog(this, "ALGO SALIO");
-                d.show();
-            }
-            else {
-                System.out.println("Usuario o contraseña incorrectos");
-            }
-            
-            
-        } catch(SQLException sqle) {
-            System.out.println("Error de conexión a la base de datos: " + sqle);
-        }
-        
-        /* 
         try {
             Statement select = con.createStatement();
             String login = String.format("SELECT * FROM users WHERE ci = %s AND password = '%s'", 
                     this.userTextField.getText(), this.jPasswordField.getText());
             
             select.executeQuery(login);
-            JDialog d = new JDialog(this, "ALGO SALIO");
-            d.show();
-        
+            JOptionPane.showMessageDialog(this, "Usted a ingresado buen hombre");
         } catch(SQLException sqle) {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
+        }finally {
+            ConnectionFactory.closeConnection(con);
         }
-        */
-        
+        }   
     // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
-    }
+
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         RegisterFrame.initRegisterFrame();
         RegisterFrame.initRegisterFrame().setVisible(true);
         
     }//GEN-LAST:event_registerButtonActionPerformed
-        
+
     /**
      * @param args the command line arguments
      */
