@@ -126,7 +126,9 @@ public class UserFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_choferButtonActionPerformed
 
     private void viajeButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viajeButton3ActionPerformed
-        // TODO add your handling code here:
+        PassengerFrame pf = new PassengerFrame();
+        pf.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_viajeButton3ActionPerformed
 
     /**
