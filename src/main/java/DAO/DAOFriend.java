@@ -148,4 +148,36 @@ public class DAOFriend implements DAOInterface<Friend>{
         }
         return false;
     }
+    
+        public boolean deleteWithId(int ci_user, int ci_friend) {
+        Connection con = ConnectionFactory.getConnection();
+        String query = "DELETE FROM friends WHERE ci_user = ? AND ci_friend = ?";
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement ps = con.prepareStatement(query);
+            if (ps != null) {
+                ps.setInt(1, ci_user);
+                ps.setInt(2, ci_friend);
+                
+                int i = ps.executeUpdate();
+                
+                ps.setInt(1, ci_friend);
+                ps.setInt(2, ci_user);
+                
+                int j = ps.executeUpdate();
+                
+                con.setAutoCommit(true);
+                
+                if (i == 1 && j == 1) {
+                    return true;
+                }
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        finally {
+            ConnectionFactory.closeConnection(con);
+        }
+        return false;
+    }
 }

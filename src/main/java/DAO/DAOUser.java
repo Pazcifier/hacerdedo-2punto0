@@ -158,6 +158,24 @@ public class DAOUser implements DAOInterface<User> {
         }
         return false;
     }
-
+    
+    public boolean deleteWithId(int id) {
+        Connection con = ConnectionFactory.getConnection();
+        String query = String.format("DELETE FROM users WHERE ci = '%s'", id);
+        try {
+            Statement delete = con.createStatement();
+            int i = delete.executeUpdate(query);
+            
+            if (i == 1) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        finally {
+            ConnectionFactory.closeConnection(con);
+        }
+        return false;
+    }
 
 }

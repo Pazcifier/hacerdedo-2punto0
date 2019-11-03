@@ -213,5 +213,24 @@ public class DAOConveyance implements DAOInterface<Conveyance> {
         }
         return false;
     }
+    
+    public boolean deleteWithId(String matricula) {
+        Connection con = ConnectionFactory.getConnection();
+        String query = String.format("DELETE FROM conveyances WHERE matricula = '%s'", matricula);
+        try {
+            Statement delete = con.createStatement();
+            int i = delete.executeUpdate(query);
+            
+            if (i == 1) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        finally {
+            ConnectionFactory.closeConnection(con);
+        }
+        return false;
+    }
 
 }
