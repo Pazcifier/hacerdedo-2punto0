@@ -6,8 +6,10 @@
 package Panels;
 
 import DAO.DAOConveyance;
+import DAO.DAOUser;
 import Model.Conveyance;
 import Model.User;
+import com.mycompany.hacerdedo.punto0.SystemLogic;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,6 +25,12 @@ public class AddVehiclePanel extends javax.swing.JFrame {
      * Creates new form AddVehiclePanel
      */
     public static AddVehiclePanel avp;
+    private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     
     public AddVehiclePanel() {
         initComponents();
@@ -32,25 +40,28 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         this.typeComboBox.addItem("Camioneta");
         this.typeComboBox.addItem("Camión");
         this.typeComboBox.addItem("Omnibus");
-        
+        this.num_asientosComboBox.addItem("1");
+                
     }
     
-    public static AddVehiclePanel initAddVehiclePanlel()
+    public static AddVehiclePanel initAddVehiclePanel()
     {
         if (avp == null) {
             avp = new AddVehiclePanel();
         }
         return avp;
     }
-    private void cargaTabla()
+    public void cargaTablaVehiculos()
     {
-        User us = LoginFrame.initLoginFrame().getUser();
+        
         DAOConveyance daoC = new DAOConveyance();
-        List<Conveyance> veh = daoC.getAllFromUser(us.getCi());
-        DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
-        for (Conveyance vehiculo : veh) {
-            tm.addRow(new Object[]{vehiculo.getMatricula(),vehiculo.getModel(),
-                                        vehiculo.getColor(),vehiculo.getNumber_seats(),vehiculo.getType()});
+        List<Conveyance> veh = daoC.getAllFromUser(user.getCi());
+        if (!veh.isEmpty()) {
+            DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
+            for (Conveyance vehiculo : veh) {
+                tm.addRow(new Object[]{vehiculo.getMatricula(),vehiculo.getModel(),
+                                            vehiculo.getColor(),vehiculo.getNumber_seats(),vehiculo.getType()});
+            }
         }
     }
     /**
@@ -73,9 +84,9 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         matriculaTextField = new javax.swing.JTextField();
         modelTextField = new javax.swing.JTextField();
         colorlTextField = new javax.swing.JTextField();
-        num_SeatsTextField = new javax.swing.JTextField();
         deleteButton = new javax.swing.JButton();
         typeComboBox = new javax.swing.JComboBox<>();
+        num_asientosComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -84,7 +95,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Matrícula", "Modelo", "Color", "Tipo asientos", "Tipo"
+                "Matrícula", "Modelo", "Color", "N° Asientos", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
@@ -139,14 +150,23 @@ public class AddVehiclePanel extends javax.swing.JFrame {
             }
         });
 
+        num_asientosComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                num_asientosComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,14 +186,11 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(colorlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(num_SeatsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(num_asientosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -205,7 +222,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                            .addComponent(num_SeatsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(num_asientosComboBox)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -231,21 +248,58 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void typeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBoxActionPerformed
-        // TODO add your handling code here:
+        int cantPermitida = 1;
+        this.num_asientosComboBox.removeAllItems();
+        switch(this.typeComboBox.getSelectedItem().toString()) {
+        case "Motocicleta":
+          cantPermitida = 1;
+          break;
+        case "Auto":
+          cantPermitida = 4;
+          break;
+        case "Camioneta":
+          cantPermitida = 6;
+          break;
+        case "Camión":
+          cantPermitida = 4;
+          break;
+        case "Omnibus":
+          cantPermitida = 36;
+          break;
+        default:
+        }
+        for (int i = 1; i <= cantPermitida; i++) {
+            this.num_asientosComboBox.addItem(i+"");
+        }
+        
     }//GEN-LAST:event_typeComboBoxActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         if (!this.matriculaTextField.getText().isEmpty() && !this.colorlTextField.getText().isEmpty()
              && !this.typeComboBox.getSelectedItem().toString().isEmpty() || !this.modelTextField.getText().isEmpty()
-                &&  !this.num_SeatsTextField.getText().isEmpty()) {
+                &&  !this.num_asientosComboBox.getSelectedItem().toString().isEmpty()) {
             
             DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
             tm.addRow(new Object[]{matriculaTextField.getText(),modelTextField.getText(),
-                                   colorlTextField.getText(),num_SeatsTextField.getText(),typeComboBox.getSelectedItem().toString()});
-        
+                                   colorlTextField.getText(),num_asientosComboBox.getSelectedItem().toString(),typeComboBox.getSelectedItem().toString()});
             
+            DAOConveyance daoC = new DAOConveyance();
+            boolean insertado = daoC.insert(new Conveyance(matriculaTextField.getText(),this.user.getCi(),
+            modelTextField.getText(),colorlTextField.getText(),typeComboBox.getSelectedItem().toString()
+            ,Integer.parseInt(num_asientosComboBox.getSelectedItem().toString())));
+            
+            if (insertado) {
+                JOptionPane.showMessageDialog(this, "Insertado");
+            } else 
+            {
+                JOptionPane.showMessageDialog(this, "No se insertó el vehiculo");
+            }
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void num_asientosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num_asientosComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_num_asientosComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,7 +328,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -295,7 +349,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField matriculaTextField;
     private javax.swing.JTextField modelTextField;
-    private javax.swing.JTextField num_SeatsTextField;
+    private javax.swing.JComboBox<String> num_asientosComboBox;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JTable vehiclesTable;
     // End of variables declaration//GEN-END:variables

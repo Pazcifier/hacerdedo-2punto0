@@ -41,6 +41,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         SystemLogic.initSystemLogic();
         daoUser = new DAOUser();
+        
         this.setLocationRelativeTo(null);
     }
     
@@ -167,9 +168,12 @@ public class LoginFrame extends javax.swing.JFrame {
             try {
                 if (SystemLogic.initSystemLogic().login(this.userTextField.getText(), this.jPasswordField.getText()))
                 {
+                    //JOptionPane.showMessageDialog(this, Integer.parseInt(userTextField.getText()));
+                    this.user = this.daoUser.get(Integer.parseInt(this.userTextField.getText().toString()));
                     UserFrame.initUserFrame();
+                    UserFrame.initUserFrame().setUser(user);
                     this.setVisible(false);
-                    this.user = this.daoUser.get(Integer.parseInt(this.userTextField.getText()));
+                    
                     this.userTextField.setText("");
                     this.jPasswordField.setText("");
                     

@@ -23,10 +23,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
@@ -50,7 +54,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="typeComboBox" min="-2" pref="157" max="-2" attributes="0"/>
                                   <Component id="colorlTextField" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="num_SeatsTextField" min="-2" pref="60" max="-2" attributes="0"/>
+                                  <Component id="num_asientosComboBox" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -59,10 +63,6 @@
                           <Component id="addButton" max="32767" attributes="0"/>
                           <Component id="deleteButton" alignment="1" pref="103" max="32767" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -105,7 +105,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" pref="22" max="32767" attributes="0"/>
-                          <Component id="num_SeatsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="num_asientosComboBox" alignment="3" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -137,7 +137,7 @@
                 <Column editable="false" title="Matr&#xed;cula" type="java.lang.String"/>
                 <Column editable="false" title="Modelo" type="java.lang.String"/>
                 <Column editable="false" title="Color" type="java.lang.String"/>
-                <Column editable="true" title="Tipo asientos" type="java.lang.String"/>
+                <Column editable="true" title="N&#xb0; Asientos" type="java.lang.String"/>
                 <Column editable="true" title="Tipo" type="java.lang.String"/>
               </Table>
             </Property>
@@ -221,8 +221,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="colorlTextField">
     </Component>
-    <Component class="javax.swing.JTextField" name="num_SeatsTextField">
-    </Component>
     <Component class="javax.swing.JButton" name="deleteButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Quitar"/>
@@ -239,6 +237,19 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="typeComboBoxActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="num_asientosComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="num_asientosComboBoxActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
