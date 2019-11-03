@@ -44,7 +44,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         this.typeComboBox.addItem("Camión");
         this.typeComboBox.addItem("Omnibus");*/
         this.num_asientosComboBox.addItem("1");
-                
+        this.vehiclesTable.removeAll();
     }
     
     public static AddVehiclePanel initAddVehiclePanel()
@@ -192,8 +192,8 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                                     .addComponent(num_asientosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -228,7 +228,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                             .addComponent(num_asientosComboBox)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -240,19 +240,16 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+            
             int filaseleccionada = this.vehiclesTable.getSelectedRow();
             if (filaseleccionada == -1){
                 JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila.");
             } else {
                 //JOptionPane.showMessageDialog(this, "Número de fila es:" + filaseleccionada);
+
                 DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
-                Vector<String> vt = tm.getDataVector();
-                for (String str: vt) {
-                   
-                }
+                daoC.deleteWithId((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 1));
                 tm.removeRow(filaseleccionada);   
-                daoC.delete(new Conveyance());
-                //daoC.delete(v);
             }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -299,6 +296,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
             
             if (insertado) {
                 JOptionPane.showMessageDialog(this, "Insertado");
+                
             } else 
             {
                 JOptionPane.showMessageDialog(this, "No se insertó el vehiculo");

@@ -42,3 +42,4 @@ CREATE TABLE travels(
 );
 
 insert into users values(123,'user','surnme','212312','pass',0.0,'Pasajero');
+--92269228

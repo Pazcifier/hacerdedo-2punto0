@@ -67,6 +67,11 @@ public class UserFrame extends javax.swing.JFrame {
         amigosButton.setText("Buscar Amigos");
 
         historialButton.setText("Historial");
+        historialButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialButtonActionPerformed(evt);
+            }
+        });
 
         choferButton.setText("Como Chofer");
         choferButton.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +133,8 @@ public class UserFrame extends javax.swing.JFrame {
     private void choferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choferButtonActionPerformed
         DriverFrame df = new DriverFrame();
         df.setUser(user);
+        df.cargarTablaHistorial();
+        df.cargarTablaVehiculosChofer();
         df.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_choferButtonActionPerformed
@@ -137,6 +144,10 @@ public class UserFrame extends javax.swing.JFrame {
         pf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_viajeButton3ActionPerformed
+
+    private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
+        
+    }//GEN-LAST:event_historialButtonActionPerformed
 
     /**
      * @param args the command line arguments

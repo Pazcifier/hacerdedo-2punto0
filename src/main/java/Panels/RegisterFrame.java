@@ -178,6 +178,11 @@ public class RegisterFrame extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
+        this.PasswordField.setText("");
+        this.nameTextField.setText("");
+        this.srnameTextField.setText("");
+        this.ciTextField.setText("");
+        this.telTextField.setText("");
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
@@ -187,19 +192,25 @@ public class RegisterFrame extends javax.swing.JFrame {
                 this.srnameTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error, verifique datos ");
         } else 
-        {
-            User us = new User(Integer.parseInt(this.ciTextField.getText()),this.PasswordField.getText(),
-                   this.nameTextField.getText(),this.srnameTextField.getText(),this.telTextField.getText());
+        {   
+            User us = new User(Integer.parseInt(this.ciTextField.getText()),this.nameTextField.getText(),
+                    this.srnameTextField.getText(),this.telTextField.getText(),this.PasswordField.getText());
             DAOUser dUser = new DAOUser();
             if (dUser.insert(us)) {
                 JOptionPane.showMessageDialog(this, "Usuario Insertado");
+                this.dispose();
+                this.PasswordField.setText("");
+                this.nameTextField.setText("");
+                this.srnameTextField.setText("");
+                this.ciTextField.setText("");
+                this.telTextField.setText("");
             } else 
             {
                 JOptionPane.showMessageDialog(this, "Usuario no se ha insertado");
             }
             
         }
-        this.dispose();
+        
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed

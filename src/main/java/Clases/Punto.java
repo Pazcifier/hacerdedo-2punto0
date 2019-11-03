@@ -21,7 +21,7 @@ public class Punto {
         latitud = lat;
     }
 
-    Punto() {}
+    //Punto() {}
     
     public ArrayList<Double> getPunto() {
         ArrayList<Double> punto = new ArrayList<Double>();
