@@ -10,6 +10,7 @@ import Model.Conveyance;
 import Model.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,6 +27,11 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     public AddVehiclePanel() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.typeComboBox.addItem("Motocicleta");
+        this.typeComboBox.addItem("Auto");
+        this.typeComboBox.addItem("Camioneta");
+        this.typeComboBox.addItem("Camión");
+        this.typeComboBox.addItem("Omnibus");
         
     }
     
@@ -46,8 +52,6 @@ public class AddVehiclePanel extends javax.swing.JFrame {
             tm.addRow(new Object[]{vehiculo.getMatricula(),vehiculo.getModel(),
                                         vehiculo.getColor(),vehiculo.getNumber_seats(),vehiculo.getType()});
         }
-        
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,8 +64,6 @@ public class AddVehiclePanel extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         vehiclesTable = new javax.swing.JTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tipoTextPane = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -73,15 +75,13 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         colorlTextField = new javax.swing.JTextField();
         num_SeatsTextField = new javax.swing.JTextField();
         deleteButton = new javax.swing.JButton();
+        typeComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         vehiclesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Matrícula", "Modelo", "Color", "Tipo asientos", "Tipo"
@@ -104,8 +104,6 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(vehiclesTable);
 
-        jScrollPane5.setViewportView(tipoTextPane);
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Matrícula");
 
@@ -122,11 +120,22 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         jLabel5.setText("Número de Asientos");
 
         addButton.setText("Añadir");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Quitar");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
+            }
+        });
+
+        typeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeComboBoxActionPerformed(evt);
             }
         });
 
@@ -155,9 +164,9 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(colorlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(num_SeatsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(num_SeatsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,10 +198,10 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                             .addComponent(colorlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(1, 1, 1)
+                                .addComponent(typeComboBox)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
@@ -211,8 +220,32 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+            int filaseleccionada = this.vehiclesTable.getSelectedRow();
+            if (filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila.");
+            } else {
+                //JOptionPane.showMessageDialog(this, "Número de fila es:" + filaseleccionada);
+                 DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
+                 tm.removeRow(filaseleccionada);                 
+            }
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void typeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeComboBoxActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (!this.matriculaTextField.getText().isEmpty() && !this.colorlTextField.getText().isEmpty()
+             && !this.typeComboBox.getSelectedItem().toString().isEmpty() || !this.modelTextField.getText().isEmpty()
+                &&  !this.num_SeatsTextField.getText().isEmpty()) {
+            
+            DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
+            tm.addRow(new Object[]{matriculaTextField.getText(),modelTextField.getText(),
+                                   colorlTextField.getText(),num_SeatsTextField.getText(),typeComboBox.getSelectedItem().toString()});
+        
+            
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,11 +293,10 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextField matriculaTextField;
     private javax.swing.JTextField modelTextField;
     private javax.swing.JTextField num_SeatsTextField;
-    private javax.swing.JTextPane tipoTextPane;
+    private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JTable vehiclesTable;
     // End of variables declaration//GEN-END:variables
 }
