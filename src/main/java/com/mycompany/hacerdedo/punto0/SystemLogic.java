@@ -70,6 +70,18 @@ public class SystemLogic {
         driverTravels.removeAll(toDeleteDriver);
     }
     
+    public void simulateTravel(int ci_driver, int ci_passenger) {
+        System.out.println("Viaje en curso...");
+        DAOTravel dT = new DAOTravel();
+        try {
+            Thread.sleep(10000);
+            Travel t = dT.getIncompleteTravel(ci_driver, ci_passenger);
+            t.setDate_end(new Timestamp(System.currentTimeMillis()));
+            dT.update(t);
+        } catch(Exception e) {
+            System.out.println("Exception: " + e);
+        }
+    }
     
     public boolean login(String cedula, String password) throws SQLException {
         Connection con = ConnectionFactory.getConnection();
