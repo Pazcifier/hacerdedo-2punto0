@@ -12,6 +12,7 @@ import Model.User;
 import com.mycompany.hacerdedo.punto0.SystemLogic;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +26,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
      * Creates new form AddVehiclePanel
      */
     public static AddVehiclePanel avp;
+    private DAOConveyance daoC;
     private User user;
 
     public void setUser(User user) {
@@ -35,11 +37,12 @@ public class AddVehiclePanel extends javax.swing.JFrame {
     public AddVehiclePanel() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.typeComboBox.addItem("Motocicleta");
-        this.typeComboBox.addItem("Auto");
-        this.typeComboBox.addItem("Camioneta");
+        daoC = new DAOConveyance();
+        this.typeComboBox.addItem("CAR");
+        this.typeComboBox.addItem("MOTORCYCLE");
+        /*this.typeComboBox.addItem("Camioneta");
         this.typeComboBox.addItem("Camión");
-        this.typeComboBox.addItem("Omnibus");
+        this.typeComboBox.addItem("Omnibus");*/
         this.num_asientosComboBox.addItem("1");
                 
     }
@@ -242,8 +245,14 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila.");
             } else {
                 //JOptionPane.showMessageDialog(this, "Número de fila es:" + filaseleccionada);
-                 DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
-                 tm.removeRow(filaseleccionada);                 
+                DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
+                Vector<String> vt = tm.getDataVector();
+                for (String str: vt) {
+                   
+                }
+                tm.removeRow(filaseleccionada);   
+                daoC.delete(new Conveyance());
+                //daoC.delete(v);
             }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -251,13 +260,13 @@ public class AddVehiclePanel extends javax.swing.JFrame {
         int cantPermitida = 1;
         this.num_asientosComboBox.removeAllItems();
         switch(this.typeComboBox.getSelectedItem().toString()) {
-        case "Motocicleta":
+        case "MOTORCYCLE":
           cantPermitida = 1;
           break;
-        case "Auto":
+        case "CAR":
           cantPermitida = 4;
           break;
-        case "Camioneta":
+        /*case "Camioneta":
           cantPermitida = 6;
           break;
         case "Camión":
@@ -265,7 +274,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
           break;
         case "Omnibus":
           cantPermitida = 36;
-          break;
+          break;*/
         default:
         }
         for (int i = 1; i <= cantPermitida; i++) {
@@ -283,7 +292,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
             tm.addRow(new Object[]{matriculaTextField.getText(),modelTextField.getText(),
                                    colorlTextField.getText(),num_asientosComboBox.getSelectedItem().toString(),typeComboBox.getSelectedItem().toString()});
             
-            DAOConveyance daoC = new DAOConveyance();
+            
             boolean insertado = daoC.insert(new Conveyance(matriculaTextField.getText(),this.user.getCi(),
             modelTextField.getText(),colorlTextField.getText(),typeComboBox.getSelectedItem().toString()
             ,Integer.parseInt(num_asientosComboBox.getSelectedItem().toString())));
