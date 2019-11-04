@@ -96,7 +96,6 @@ public class DriverFrame extends javax.swing.JFrame {
         addVehicleButton = new javax.swing.JButton();
         initTravelButton = new javax.swing.JButton();
         statusPanel = new javax.swing.JPanel();
-        statusLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         vehiclesTable = new javax.swing.JTable();
         vehiculosLabel = new javax.swing.JLabel();
@@ -130,17 +129,11 @@ public class DriverFrame extends javax.swing.JFrame {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+            .addGap(0, 203, Short.MAX_VALUE)
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 42, Short.MAX_VALUE)
         );
 
         vehiclesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -342,8 +335,8 @@ public class DriverFrame extends javax.swing.JFrame {
             DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
             Punto ini = new Punto(Double.parseDouble(this.long_InicioTextField.getText()),Double.parseDouble(this.lat_InicioTextField.getText()));
             Punto fin = new Punto(Double.parseDouble(this.long_FinTextField.getText()),Double.parseDouble(this.lat_FinTextField.getText()));
-            SystemLogic.initSystemLogic().postDriverTravel((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 1), new Ruta(ini,fin), user.getCi(),
-                    Integer.parseInt((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 4)));
+            SystemLogic.initSystemLogic().postDriverTravel((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 0), new Ruta(ini,fin), user.getCi(),
+                    Integer.parseInt((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 3)));
             JOptionPane.showMessageDialog(this, "Posteado");
         } else {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún vehículo");
@@ -425,7 +418,6 @@ public class DriverFrame extends javax.swing.JFrame {
     private javax.swing.JTextField long_FinTextField;
     private javax.swing.JTextField long_InicioTextField;
     private javax.swing.JButton postearButton;
-    private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JTable vehiclesTable;
     private javax.swing.JLabel vehiculosLabel;

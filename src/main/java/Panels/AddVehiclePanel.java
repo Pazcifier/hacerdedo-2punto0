@@ -248,7 +248,7 @@ public class AddVehiclePanel extends javax.swing.JFrame {
                 //JOptionPane.showMessageDialog(this, "Número de fila es:" + filaseleccionada);
 
                 DefaultTableModel tm = (DefaultTableModel) this.vehiclesTable.getModel();
-                daoC.deleteWithId((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 1));
+                daoC.deleteWithId((String)tm.getValueAt(this.vehiclesTable.getSelectedRow(), 0));
                 tm.removeRow(filaseleccionada);   
             }
     }//GEN-LAST:event_deleteButtonActionPerformed
