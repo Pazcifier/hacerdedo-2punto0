@@ -152,7 +152,10 @@ public class UserFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_viajeButton3ActionPerformed
 
     private void historialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialButtonActionPerformed
-        
+        HistoryPanel hp = new HistoryPanel();
+        hp.cargarTablaHistorial();
+        hp.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_historialButtonActionPerformed
 
     private void amigosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amigosButtonActionPerformed
