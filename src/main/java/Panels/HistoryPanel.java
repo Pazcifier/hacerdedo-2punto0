@@ -29,6 +29,7 @@ public class HistoryPanel extends javax.swing.JFrame {
         daoT = new DAOTravel();
         this.historyTable.removeAll();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
     
     public void cargarTablaHistorial()
