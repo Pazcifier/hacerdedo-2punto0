@@ -52,7 +52,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.mycompany.hacerdedo.punto0.ProyectoBD</mainClass>
+                  <mainClass>Panels.LoginFrame</mainClass>
                 </transformer>
               </transformers>
             </configuration>
