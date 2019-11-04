@@ -27,6 +27,7 @@ public class DAOTravel implements DAOInterface<Travel> {
         t.setMatricula_vehicle(rs.getString("matricula_vehicle"));
         t.setSeats_available(rs.getInt("seats_available"));
         t.setCompanions(rs.getInt("companions"));
+        t.setProgress(rs.getString("progress"));
         
         return t;
     }

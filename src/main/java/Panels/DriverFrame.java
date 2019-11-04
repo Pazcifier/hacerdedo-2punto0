@@ -115,8 +115,8 @@ public class DriverFrame extends javax.swing.JFrame {
         actualizarVehiculosButton = new javax.swing.JButton();
         vehiculosLabel1 = new javax.swing.JLabel();
         actualizarViajesButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setUndecorated(true);
 
@@ -229,17 +229,18 @@ public class DriverFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Iniciar Viaje");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         salirButton.setText("Salir");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirButtonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Iniciar Viaje");
+        jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -267,10 +268,9 @@ public class DriverFrame extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,12 +283,10 @@ public class DriverFrame extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(lat_FinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(postearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(postearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(postearButton, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -321,6 +319,8 @@ public class DriverFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(salirButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -339,14 +339,9 @@ public class DriverFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lat_FinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(postearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(postearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addVehicleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(vehiculosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(actualizarVehiculosButton)
@@ -406,18 +401,23 @@ public class DriverFrame extends javax.swing.JFrame {
         this.cargarTablaHistorial();
     }//GEN-LAST:event_actualizarViajesButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (SystemLogic.initSystemLogic().simulateTravel()) {
-            JOptionPane.showMessageDialog(this, "Viajes completados");
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al realizar viajes");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
         this.dispose();
         UserFrame.initUserFrame().setVisible(true);
     }//GEN-LAST:event_salirButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (SystemLogic.initSystemLogic().checkPostCompatibillity()) {
+            JOptionPane.showMessageDialog(this, "Simulando viajes...");
+            if (SystemLogic.initSystemLogic().simulateTravel()) {
+                JOptionPane.showMessageDialog(this, "Viajes terminados de manera satisfactoria");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar viaje en curso o no hay viajes compatibles disponibles");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay viajes compatibles en este momento");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -459,7 +459,6 @@ public class DriverFrame extends javax.swing.JFrame {
     private javax.swing.JButton actualizarViajesButton;
     private javax.swing.JButton addVehicleButton;
     private javax.swing.JTable historyTable;
-    private javax.swing.JButton initTravelButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

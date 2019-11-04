@@ -52,9 +52,9 @@ public class SystemLogic {
         return pP;
     }
     
-    public void checkPostCompatibillity() {
-        ArrayList<PostedDriver> toDeleteDriver = new ArrayList<PostedDriver>();
-        ArrayList<PostedPassenger> toDeletePassenger = new ArrayList<PostedPassenger>();
+    public boolean checkPostCompatibillity() {
+        passengerTravels.removeAll(passengerInProgress);
+        driverTravels.removeAll(driverInProgress);
         
         DAOTravel dT = new DAOTravel();
         for (PostedPassenger pP : passengerTravels) {
@@ -62,17 +62,18 @@ public class SystemLogic {
                 if (checkCompatibilidad(pD.getRoute(), pP.getRoute())) {
                     Travel t = new Travel(pD.getCedula(), pP.getCedula(), new Timestamp(System.currentTimeMillis()), pD.getMatricula(), pD.getSeats_available(), pP.getCompanions());
                     if (dT.insert(t)) {
-                        toDeleteDriver.add(pD);
-                        toDeletePassenger.add(pP);
+                        driverInProgress.add(pD);
+                        passengerInProgress.add(pP);
+                        return true;
                     }
                     else {
                         System.out.println("Error de inserción");
+                        return false;
                     }
                 }
             }
         }
-        passengerTravels.removeAll(toDeletePassenger);
-        driverTravels.removeAll(toDeleteDriver);
+        return false;
     }
     
         public boolean checkPostCompatibillityPassenger(PostedPassenger pP) {
@@ -120,6 +121,9 @@ public class SystemLogic {
     }
     
     public boolean simulateTravel() {
+        ArrayList<PostedDriver> toDeleteDriver = new ArrayList<PostedDriver>();
+        ArrayList<PostedPassenger> toDeletePassenger = new ArrayList<PostedPassenger>();
+        
         if (passengerInProgress.size() > 0 && driverInProgress.size() > 0) {
             System.out.println("Viajes en curso...");
             DAOTravel dT = new DAOTravel();
@@ -130,6 +134,8 @@ public class SystemLogic {
                         Travel t = dT.getIncompleteTravel(pD.getCedula(), pP.getCedula());
                         t.setDate_end(new Timestamp(System.currentTimeMillis()));
                         if (dT.update(t)) {
+                            passengerInProgress.removeAll(toDeletePassenger);
+                            driverInProgress.removeAll(toDeleteDriver);
                             return true;
                         } else {
                             return false;

@@ -191,9 +191,10 @@ public class ProyectoBD {
             SystemLogic sl = new SystemLogic();
             
             sl.postDriverTravel("SCJ-4489", rC, 63043005, 4);
-            sl.postPassengerTravel(rP, 63341075, 0);
+            sl.postPassengerTravel(rP, 63043005, 0);
             
-            
+            sl.checkPostCompatibillity();
+            sl.simulateTravel();
             
             
             

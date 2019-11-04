@@ -34,6 +34,7 @@ public class HistoryPanel extends javax.swing.JFrame {
     
     public void cargarTablaHistorial()
     {
+        this.historyTable.removeAll();
         DefaultTableModel tm = (DefaultTableModel) this.historyTable.getModel();
         List<Travel> viajes = daoT.getAllFromUser(user.getCi());
         for (Travel viaje : viajes) {

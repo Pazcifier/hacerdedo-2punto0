@@ -85,7 +85,7 @@ public class LoginFrame extends javax.swing.JFrame {
         nameAppLabel1.setBackground(new java.awt.Color(255, 51, 51));
         nameAppLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         nameAppLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameAppLabel1.setText("INSERT NAME APP HERE !!");
+        nameAppLabel1.setText("HACER DEDO 2.0");
 
         userTextField.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         userTextField.addActionListener(new java.awt.event.ActionListener() {

@@ -51,7 +51,7 @@
                               <Component id="jLabel1" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel4" min="-2" pref="118" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -68,9 +68,10 @@
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="postearButton" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="postearButton" pref="111" max="32767" attributes="0"/>
                           <Component id="salirButton" min="-2" pref="79" max="-2" attributes="0"/>
+                          <Component id="jButton1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -116,6 +117,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="salirButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -145,7 +148,7 @@
                   <Component id="postearButton" max="32767" attributes="0"/>
                   <Component id="addVehicleButton" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="vehiculosLabel" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="actualizarVehiculosButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -371,6 +374,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salirButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Iniciar Viaje"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
